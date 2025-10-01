@@ -1,0 +1,143 @@
+{
+  "info": {
+    "name": "Dog Explorer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Collection to test Dog Explorer API endpoints"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Get breeds",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/breeds",
+          "host": ["{{baseUrl}}"],
+          "path": ["breeds"]
+        }
+      }
+    },
+    {
+      "name": "Breed random image",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/breeds/{{breed}}/images/random",
+          "host": ["{{baseUrl}}"],
+          "path": ["breeds","{{breed}}","images","random"]
+        }
+      }
+    },
+    {
+      "name": "Breed info",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/breeds/{{breed}}/info",
+          "host": ["{{baseUrl}}"],
+          "path": ["breeds","{{breed}}","info"]
+        }
+      }
+    },
+    {
+      "name": "Random image",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/random",
+          "host": ["{{baseUrl}}"],
+          "path": ["images","random"]
+        }
+      }
+    },
+    {
+      "name": "Create dog",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();",
+              "if (res && res.id) { pm.collectionVariables.set('dogId', res.id); }"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Buddy\",\n  \"breed\": \"{{breed}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dogs",
+          "host": ["{{baseUrl}}"],
+          "path": ["dogs"]
+        }
+      }
+    },
+    {
+      "name": "Pet dog",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dogs/{{dogId}}/pet",
+          "host": ["{{baseUrl}}"],
+          "path": ["dogs","{{dogId}}","pet"]
+        }
+      }
+    },
+    {
+      "name": "Get dog by id",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dogs/{{dogId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dogs","{{dogId}}"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "dogId", "value": "" }
+  ]
+}
+
+

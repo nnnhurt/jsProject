@@ -1,0 +1,33 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+  api:
+    build: .
+    image: dog-explorer-api:latest
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongo:27017/dog_explorer
+      API_KEY: change-me
+      THE_DOG_API_KEY: ''
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./src:/app/src
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./package.json:/app/package.json
+    command: sh -c "npm ci && npm run dev"
+
+volumes:
+  mongo_data:
+    driver: local
+
+
