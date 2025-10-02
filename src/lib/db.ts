@@ -1,3 +1,4 @@
+// подключение к монго
 import mongoose from 'mongoose';
 
 let isConnected = false;

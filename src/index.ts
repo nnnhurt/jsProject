@@ -1,3 +1,4 @@
+// просто старт
 import dotenv from 'dotenv';
 dotenv.config();
 
