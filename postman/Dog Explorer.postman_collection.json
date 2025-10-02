@@ -136,9 +136,7 @@
       "name": "Random image",
       "request": {
         "method": "GET",
-        "header": [
-          { "key": "x-api-key", "value": "{{apiKey}}" }
-        ],
+        "header": [],
         "url": {
           "raw": "{{baseUrl}}/images/random",
           "host": ["{{baseUrl}}"],
@@ -168,7 +166,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"Buddy\",\n  \"breed\": \"{{breed}}\"\n}"
+          "raw": "{\n  \"name\": \"Buddy\",\n  \"breed\": \"{{breed}}\",\n  \"colors\": [\n    \"black\",\n    \"white\"\n  ]\n}"
         },
         "url": {
           "raw": "{{baseUrl}}/dogs",

@@ -4,6 +4,7 @@ export interface UserDocument extends Document {
   username: string;
   passwordHash: string;
   passwordSalt: string;
+  dogs: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -12,7 +13,8 @@ const UserSchema = new Schema<UserDocument>(
   {
     username: { type: String, required: true, unique: true, trim: true },
     passwordHash: { type: String, required: true },
-    passwordSalt: { type: String, required: true }
+    passwordSalt: { type: String, required: true },
+    dogs: [{ type: Schema.Types.ObjectId, ref: 'Dog', default: [] }]
   },
   { timestamps: true }
 );

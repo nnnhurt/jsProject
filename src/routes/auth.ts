@@ -1,3 +1,4 @@
+// регистрация и аутентификация
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
