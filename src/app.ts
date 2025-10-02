@@ -1,10 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import { authMiddleware } from './middleware/auth.js';
+import { jwtMiddleware } from './middleware/auth.js';
 import breedsRouter from './routes/breeds.js';
 import imagesRouter from './routes/images.js';
 import dogsRouter from './routes/dogs.js';
+import authRouter from './routes/auth.js';
 
 export const app = express();
 
@@ -12,11 +13,11 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use(authMiddleware);
+app.use('/auth', authRouter);
 
 app.use('/breeds', breedsRouter);
 app.use('/images', imagesRouter);
-app.use('/dogs', dogsRouter);
+app.use('/dogs', jwtMiddleware, dogsRouter);
 
 app.get('/health', (_req, res) => {
   res.json({ ok: true });

@@ -11,9 +11,9 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Invalid body: name and breed are required' });
     }
     const dog = await Dog.create({ name, breed });
-    res.status(201).json({ id: dog.id, name: dog.name, breed: dog.breed, happinessLevel: dog.happinessLevel });
+    return res.status(201).json({ id: dog.id, name: dog.name, breed: dog.breed, happinessLevel: dog.happinessLevel });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create dog' });
+    return res.status(500).json({ error: 'Failed to create dog' });
   }
 });
 
@@ -27,9 +27,9 @@ router.post('/:id/pet', async (req, res) => {
     }
     dog.happinessLevel = Math.min(100, dog.happinessLevel + 20);
     await dog.save();
-    res.json({ id: dog.id, name: dog.name, breed: dog.breed, happinessLevel: dog.happinessLevel });
+    return res.json({ id: dog.id, name: dog.name, breed: dog.breed, happinessLevel: dog.happinessLevel });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to pet dog' });
+    return res.status(500).json({ error: 'Failed to pet dog' });
   }
 });
 
@@ -41,9 +41,9 @@ router.get('/:id', async (req, res) => {
     if (!dog) {
       return res.status(404).json({ error: 'Dog not found' });
     }
-    res.json({ id: dog.id, name: dog.name, breed: dog.breed, happinessLevel: dog.happinessLevel });
+    return res.json({ id: dog.id, name: dog.name, breed: dog.breed, happinessLevel: dog.happinessLevel });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to get dog' });
+    return res.status(500).json({ error: 'Failed to get dog' });
   }
 });
 

@@ -9,9 +9,9 @@ router.get('/', async (_req, res) => {
     const { data } = await axios.get('https://dog.ceo/api/breeds/list/all');
     const breedsObject = data?.message || {};
     const breeds = Object.keys(breedsObject);
-    res.json({ breeds });
+    return res.json({ breeds });
   } catch (error) {
-    res.status(502).json({ error: 'Failed to fetch breeds' });
+    return res.status(502).json({ error: 'Failed to fetch breeds' });
   }
 });
 
@@ -20,9 +20,9 @@ router.get('/:breed/images/random', async (req, res) => {
   const breed = req.params.breed;
   try {
     const { data } = await axios.get(`https://dog.ceo/api/breed/${breed}/images/random`);
-    res.json({ breed, imageUrl: data?.message });
+    return res.json({ breed, imageUrl: data?.message });
   } catch (error) {
-    res.status(502).json({ error: 'Failed to fetch breed image' });
+    return res.status(502).json({ error: 'Failed to fetch breed image' });
   }
 });
 
@@ -39,7 +39,7 @@ router.get('/:breed/info', async (req, res) => {
       return res.status(404).json({ error: 'Breed not found' });
     }
     const b = data[0];
-    res.json({
+    return res.json({
       breed,
       weight: b.weight?.metric ?? null,
       height: b.height?.metric ?? null,
@@ -47,7 +47,7 @@ router.get('/:breed/info', async (req, res) => {
       temperament: b.temperament ?? null
     });
   } catch (error) {
-    res.status(502).json({ error: 'Failed to fetch breed info' });
+    return res.status(502).json({ error: 'Failed to fetch breed info' });
   }
 });
 
