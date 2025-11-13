@@ -21,11 +21,12 @@ services:
       JWT_REFRESH_SECRET: change-me-three
     ports:
       - '3000:3000'
-    volumes:
-      - ./src:/app/src
-      - ./tsconfig.json:/app/tsconfig.json
-      - ./package.json:/app/package.json
-    # command: sh -c "npx ts-node-dev --esm --respawn --transpile-only --ignore-watch node_modules src/index.ts"
+    # Remove source code volume mounts for production build
+    # Commented out for production, uncomment for development
+    # volumes:
+    #   - ./src:/app/src
+    #   - ./tsconfig.json:/app/tsconfig.json
+    #   - ./package.json:/app/package.json
 
 volumes:
   mongo_data:

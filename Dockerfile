@@ -23,4 +23,15 @@ COPY --from=build /app/dist ./dist
 EXPOSE 3000
 CMD ["node", "dist/index.js"]
 
+# ===== Development =====
+FROM base AS development
+WORKDIR /app
+RUN apk add --no-cache dumb-init
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+ENTRYPOINT ["dumb-init"]
+CMD ["npm", "run", "dev"]
+
 

@@ -6,7 +6,44 @@ const router = Router();
 const DOG_CEO_BASE = process.env.DOG_CEO_API_BASE || 'https://dog.ceo/api';
 const THE_DOG_API_BASE = process.env.THE_DOG_API_BASE || 'https://api.thedogapi.com/v1';
 
-// GET /breeds - list all breeds from Dog CEO API
+/**
+ * @swagger
+ * tags:
+ *   name: Breeds
+ *   description: Dog breeds management
+ */
+
+/**
+ * @swagger
+ * /breeds:
+ *   get:
+ *     summary: List all dog breeds
+ *     tags: [Breeds]
+ *     description: Retrieve a list of all dog breeds from Dog CEO API
+ *     responses:
+ *       200:
+ *         description: A list of dog breeds
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 breeds:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: List of breed names
+ *       502:
+ *         description: Failed to fetch breeds
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Failed to fetch breeds
+ */
 router.get('/', async (_req, res) => {
   try {
     const { data } = await axios.get(`${DOG_CEO_BASE}/breeds/list/all`);
@@ -18,7 +55,45 @@ router.get('/', async (_req, res) => {
   }
 });
 
-// GET /breeds/:breed/images/random - image for a breed
+/**
+ * @swagger
+ * /breeds/{breed}/images/random:
+ *   get:
+ *     summary: Get a random image for a specific breed
+ *     tags: [Breeds]
+ *     description: Retrieve a random image URL for the specified breed
+ *     parameters:
+ *       - in: path
+ *         name: breed
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The breed name
+ *     responses:
+ *       200:
+ *         description: A random image for the breed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 breed:
+ *                   type: string
+ *                   description: The breed name
+ *                 imageUrl:
+ *                   type: string
+ *                   description: URL of the breed image
+ *       502:
+ *         description: Failed to fetch breed image
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Failed to fetch breed image
+ */
 router.get('/:breed/images/random', async (req, res) => {
   const breed = req.params.breed;
   try {
@@ -29,7 +104,64 @@ router.get('/:breed/images/random', async (req, res) => {
   }
 });
 
-// GET /breeds/:breed/info - info from The Dog API
+/**
+ * @swagger
+ * /breeds/{breed}/info:
+ *   get:
+ *     summary: Get detailed information for a specific breed
+ *     tags: [Breeds]
+ *     description: Retrieve detailed information about the specified breed from The Dog API
+ *     parameters:
+ *       - in: path
+ *         name: breed
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The breed name
+ *     responses:
+ *       200:
+ *         description: Detailed information about the breed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 breed:
+ *                   type: string
+ *                   description: The breed name
+ *                 weight:
+ *                   type: string
+ *                   description: Weight range of the breed
+ *                 height:
+ *                   type: string
+ *                   description: Height range of the breed
+ *                 life_span:
+ *                   type: string
+ *                   description: Life span of the breed
+ *                 temperament:
+ *                   type: string
+ *                   description: Temperament of the breed
+ *       404:
+ *         description: Breed not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Breed not found
+ *       502:
+ *         description: Failed to fetch breed info
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Failed to fetch breed info
+ */
 router.get('/:breed/info', async (req, res) => {
   const breed = req.params.breed;
   try {

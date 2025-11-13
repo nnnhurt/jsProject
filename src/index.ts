@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import http from 'http';
-import { app } from './app.js';
-import { connectToDatabase } from './lib/db.js';
+import { app } from './app';
+import { connectToDatabase } from './lib/db';
 
 const port = Number(process.env.PORT || 3000);
 
